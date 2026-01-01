@@ -4,18 +4,33 @@
 
 ### Setup phase
 
-Started with installing KVM and virt-manager on Arch Linux for virtualization.
+Started with installing KVM and virt-manager on Arch Linux for virtualization and creating a hardened Ubuntu Server VM accessed only via SSH keys.
 
-#### Lists
+#### Packages installed (host)
 
-- Packages installed: `qemu`, `virt-manager`, `virt-viewer`, `libvirt`, `edk2-ovmf`, `bridge-utils`, `dnsmasq`
-- Enabled and started `libvirtd` service
+- `qemu`
+- `virt-manager`
+- `virt-viewer`
+- `libvirt`
+- `edk2-ovmf`
+- `bridge-utils`
+- `dnsmasq`
+
+#### Host configuration steps
+
+- Updated system
+- Installed virtualization stack
+- Enabled and started libvirt daemon
 - Added user to `libvirt` group
-- Verified virtualization support
+- Verified hardware virtualization support
 
-#### Commands used
+#### Commands used (host)
 
-* Update system and install virtualization packages
-  ```bash
-  sudo pacman -Syu qemu virt-manager virt-viewer libvirt edk2-ovmf bridge-utils dnsmasq
+```bash
+sudo pacman -Syu
+sudo pacman -S qemu virt-manager virt-viewer libvirt edk2-ovmf bridge-utils dnsmasq
 
+sudo systemctl enable --now libvirtd
+sudo usermod -aG libvirt kishore
+
+lsmod | grep kvm
